@@ -140,7 +140,9 @@ class GitRepo:
                 LOG.debug("\nTemp clone path: %s", temp_path)
                 git_executable: str = GitRepo.git_executable()
                 LOG.info("\nCloning from %s (process may take a moment)", self.url)
-                command = [git_executable, "clone", self.url, clone_name]
+                command = [git_executable, "clone", self.url, temp_path]
+                LOG.debug("\SYSTEM: %s", platform.system().lower())
+
                 if platform.system().lower() == "windows":
                     LOG.debug(
                         "Configure core.longpaths=true in git clone. "
@@ -149,7 +151,7 @@ class GitRepo:
                     command += ["--config", "core.longpaths=true"]
                 check_output(
                     command,
-                    cwd=tempdir,
+                    #cwd=tempdir,
                     stderr=subprocess.STDOUT,
                 )
 
