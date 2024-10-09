@@ -137,12 +137,24 @@ class GitRepo:
         with osutils.mkdir_temp(ignore_errors=True) as tempdir:
             try:
                 temp_path = os.path.normpath(os.path.join(tempdir, clone_name))
-                LOG.debug("\nTemp clone path: %s", temp_path)
+                LOG.info("\nTemp clone path: %s", temp_path)
                 git_executable: str = GitRepo.git_executable()
                 LOG.info("\nCloning from %s (process may take a moment)", self.url)
-                command = [git_executable, "clone", self.url, temp_path]
-                LOG.debug("\SYSTEM: %s", platform.system().lower())
-
+                command = [git_executable, "clone", self.url, clone_name]
+                LOG.info("\SYSTEM: %s", platform.system().lower())
+                LOG.info("TRY 1")
+                check_output([git_executable, "status"], 
+                             cwd=tempdir, 
+                             stderr=subprocess.STDOUT)
+                LOG.info("TRY 2")
+                check_output([git_executable, "clone", self.url],
+                             cwd=tempdir,
+                             stderr=subprocess.STDOUT)
+                LOG.info("TRY 3")
+                check_output([git_executable, "status"],
+                             cwd=tempdir,
+                             stderr=subprocess.STDOUT)
+                
                 if platform.system().lower() == "windows":
                     LOG.debug(
                         "Configure core.longpaths=true in git clone. "
@@ -151,7 +163,7 @@ class GitRepo:
                     command += ["--config", "core.longpaths=true"]
                 check_output(
                     command,
-                    #cwd=tempdir,
+                    cwd=tempdir,
                     stderr=subprocess.STDOUT,
                 )
 
