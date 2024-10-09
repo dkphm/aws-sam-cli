@@ -143,17 +143,28 @@ class GitRepo:
                 command = [git_executable, "clone", self.url, clone_name]
                 LOG.info("\SYSTEM: %s", platform.system().lower())
                 LOG.info("TRY 1")
-                check_output([git_executable, "status"], 
+                try:
+                    check_output([git_executable, "status"],
                              cwd=tempdir, 
                              stderr=subprocess.STDOUT)
+                except:
+                    LOG.warning("ERROR 123 %s", self.url, exc_info=ex)
+
                 LOG.info("TRY 2")
-                check_output([git_executable, "clone", self.url],
+                try:
+                    check_output([git_executable, "clone", self.url],
                              cwd=tempdir,
                              stderr=subprocess.STDOUT)
+                except:
+                    LOG.warning("ERROR 123 %s", self.url, exc_info=ex)
+
                 LOG.info("TRY 3")
-                check_output([git_executable, "status"],
+                try:
+                    check_output([git_executable, "status"],
                              cwd=tempdir,
                              stderr=subprocess.STDOUT)
+                except:
+                    LOG.warning("ERROR 123 %s", self.url, exc_info=ex)
                 
                 if platform.system().lower() == "windows":
                     LOG.debug(
