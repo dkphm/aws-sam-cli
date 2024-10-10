@@ -82,7 +82,7 @@ class GitRepo:
         if platform.system().lower() == "windows":
             executables = ["git", "git.cmd", "git.exe", "git.bat"]
         else:
-            executables = ["git"]
+            executables = ["GIT_CURL_VERBOSE=1 GIT_TRACE=1 git"]
 
         for executable in executables:
             try:
