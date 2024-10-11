@@ -152,14 +152,14 @@ class GitRepo:
                 env={}
                 env['GIT_TRACE'] = '1'
                 env['GIT_CURL_VERBOSE'] = '1'
-                LOG.info("AAAAAAB")
-                subprocess.run(command, cwd=tempdir, env=env, check=True, stdout=subprocess.PIPE)
-                # check_output(
-                #     command,
-                #     cwd=tempdir,
-                #     env=env,
-                #     stderr=subprocess.STDOUT
-                # )
+                LOG.info("AAAAAAC")
+                #subprocess.run(command, cwd=tempdir, env=env, check=True, stdout=subprocess.PIPE)
+                check_output(
+                    command,
+                    cwd=tempdir,
+                    env=env,
+                    stderr=subprocess.STDOUT
+                )
 
                 # bind a certain sam cli release to a specific commit of the aws-sam-cli-app-templates's repo, avoiding
                 # regression
