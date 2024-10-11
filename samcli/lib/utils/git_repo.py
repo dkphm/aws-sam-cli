@@ -82,7 +82,7 @@ class GitRepo:
         if platform.system().lower() == "windows":
             executables = ["git", "git.cmd", "git.exe", "git.bat"]
         else:
-            executables = ["GIT_CURL_VERBOSE=1 GIT_TRACE=1 git"]
+            executables = ["git"]
 
         for executable in executables:
             try:
@@ -141,30 +141,6 @@ class GitRepo:
                 git_executable: str = GitRepo.git_executable()
                 LOG.info("\nCloning from %s (process may take a moment)", self.url)
                 command = [git_executable, "clone", self.url, clone_name]
-                LOG.info("\SYSTEM: %s", platform.system().lower())
-                LOG.info("TRY 1")
-                try:
-                    check_output([git_executable, "status"],
-                             cwd=tempdir, 
-                             stderr=subprocess.STDOUT)
-                except:
-                    LOG.warning("ERROR 123 %s", self.url, exc_info=ex)
-
-                LOG.info("TRY 2")
-                try:
-                    check_output([git_executable, "clone", self.url],
-                             cwd=tempdir,
-                             stderr=subprocess.STDOUT)
-                except:
-                    LOG.warning("ERROR 123 %s", self.url, exc_info=ex)
-
-                LOG.info("TRY 3")
-                try:
-                    check_output([git_executable, "status"],
-                             cwd=tempdir,
-                             stderr=subprocess.STDOUT)
-                except:
-                    LOG.warning("ERROR 123 %s", self.url, exc_info=ex)
                 
                 if platform.system().lower() == "windows":
                     LOG.debug(
