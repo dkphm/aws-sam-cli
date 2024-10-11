@@ -152,7 +152,7 @@ class GitRepo:
                 env={}
                 env['GIT_TRACE'] = '1'
                 env['GIT_CURL_VERBOSE'] = '1'
-                LOG.info("AAAAAAC")
+                LOG.info("AAAAAAB")
                 #subprocess.run(command, cwd=tempdir, env=env, check=True, stdout=subprocess.PIPE)
                 check_output(
                     command,
