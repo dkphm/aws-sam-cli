@@ -148,11 +148,12 @@ class GitRepo:
                         "You might also need to enable long paths in Windows registry."
                     )
                     command += ["--config", "core.longpaths=true"]
-                check_output(
-                    command,
-                    cwd=tempdir,
-                    stderr=subprocess.STDOUT,
-                )
+                
+                env={}
+                env['GIT_TRACE'] = '1'
+                env['GIT_CURL_VERBOSE'] = '1'
+                LOG.info("AAAAAA")
+                subprocess.run(command, cwd=tempdir, check=True, env=env)
 
                 # bind a certain sam cli release to a specific commit of the aws-sam-cli-app-templates's repo, avoiding
                 # regression
