@@ -9,7 +9,7 @@ from pathlib import Path
 
 # import check_output alone so that it can be patched without affecting
 # other parts of subprocess.
-from subprocess import check_output
+from subprocess import check_output, run
 from typing import Optional
 
 from samcli.commands.exceptions import UserException
@@ -146,9 +146,11 @@ class GitRepo:
                         "You might also need to enable long paths in Windows registry."
                     )
                     command += ["--config", "core.longpaths=true"]
-                check_output(
+                run(
                     command,
+                    check=True,
                     cwd=tempdir,
+                    stdout=subprocess.PIPE,
                     stderr=subprocess.STDOUT,
                 )
 
